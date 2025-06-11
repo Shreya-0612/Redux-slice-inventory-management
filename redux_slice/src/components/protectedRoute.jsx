@@ -5,6 +5,7 @@ import { selectIsAuthenticated } from "../redux/selector/selector";
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const getToken = localStorage.getItem("token")
   const location = useLocation();
 
   useEffect(() => {
@@ -12,7 +13,7 @@ const ProtectedRoute = ({ children }) => {
     // console.log("Token in localStorage:", localStorage.getItem('token'));
   }, [isAuthenticated]);
 
-  if (!isAuthenticated) {
+  if (!getToken || (isAuthenticated && isAuthenticated === false)) {
     console.log("Access denied - redirecting to login");
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
