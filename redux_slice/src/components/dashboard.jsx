@@ -2,13 +2,14 @@ import React from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from '../redux/action/loginAction'; 
-import { selectLoading } from '../redux/selector/selector';
-import Sidebar from './sidebar';
+import { selectLoading, selectLowStockStatus } from '../redux/selector/selector';
+import Sidebar from './sidebar'; 
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoading = useSelector(selectLoading);
+  const lowStockProducts = useSelector(selectLowStockStatus); 
   
   const userRole = localStorage.getItem("user_role") || "default";
   
@@ -22,6 +23,7 @@ const Dashboard = () => {
     inventory_manager: [
       { to: "/dashboard/add-inventory", text: "Add Inventory" },
       { to: "/dashboard/view-product", text: "View Inventory" },
+      { to: "/dashboard/show-users", text: "Show Users" },
     ],
     warehouse_staff: [
       { to: "/dashboard/view-product", text: "View Inventory" },
@@ -40,7 +42,7 @@ const Dashboard = () => {
 
   return (
     <div className='flex h-screen bg-gray-100'>
-      <Sidebar roleButtons={roleButtons} />
+      <Sidebar roleButtons={roleButtons} lowStockProducts={lowStockProducts} /> {/* Pass lowStockProducts here */}
       <div className="flex-1 flex flex-col bg-gray-50 overflow-y-auto">
         <div className="flex justify-between items-center p-6 bg-white shadow-sm border-b">
           <div>
@@ -50,7 +52,9 @@ const Dashboard = () => {
           <button
             onClick={handleLogout}
             disabled={isLoading}
-            className="px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-red-400 text-white font-medium rounded-lg transition-colors duration-200"
+            className={`px-4 py-2 rounded-lg text-white font-medium transition-colors duration-200 ${
+              isLoading ? 'bg-red-400' : 'bg-red-600 hover:bg-red-700'
+            }`}
           >
             {isLoading ? 'Logging out...' : 'Logout'}
           </button>

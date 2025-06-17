@@ -8,7 +8,8 @@ const initialState = {
   categories: [],
   subcategories: [],
   inventory: [],
-  stockStatus: []
+  stockStatus: [],
+  lowStockStatus: [],
 };
 
 const inventorySlice = createSlice({
@@ -69,6 +70,10 @@ const inventorySlice = createSlice({
 
     setStockStatus: (state, action) => {
       state.stockStatus = action.payload;
+    },
+
+    setLowStockStatus: (state, action) => {
+      state.lowStockStatus = action.payload;
     }
     
   }
@@ -85,7 +90,8 @@ export const {
   setInventories, 
   removeInventory, 
   updateInventory, 
-  setStockStatus 
+  setStockStatus,
+  setLowStockStatus 
 } = inventorySlice.actions;
 
 export default inventorySlice.reducer;

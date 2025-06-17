@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaExclamationTriangle } from 'react-icons/fa';
+import { FaExclamationTriangle } from 'react-icons/fa'; 
 
 const Sidebar = ({ roleButtons, lowStockProducts }) => {
   return (
@@ -22,6 +22,7 @@ const Sidebar = ({ roleButtons, lowStockProducts }) => {
         ))}
       </nav>
       
+      {/* Low Stock Notification Section */}
       <div className="mt-6 bg-gray-700 rounded-lg p-4">
         <h3 className="text-lg text-yellow-400 font-bold mb-2 flex items-center">
           <FaExclamationTriangle className="mr-2" /> Low Stock Alerts

@@ -97,4 +97,14 @@ export const selectGetAllInventorys = createSelector(
   [selectInventoryState],
   (inventoryState) => inventoryState?.inventories || []
 );
+export const selectUserByUserName = createSelector(
+  [selectUsers, (state, user_name) => user_name], 
+  (users, user_name) => {
+    return users.find(user => user.user_name === user_name) || null; 
+  }
+);
 
+export const selectLowStockStatus = createSelector(
+  [selectInventoryState],
+  (inventoryState) => inventoryState?.lowStockStatus || []
+);

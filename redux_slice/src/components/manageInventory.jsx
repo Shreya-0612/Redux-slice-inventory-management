@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { manageInventoryAction, fetchStockStatusAction } from "../redux/action/inventoryAction";
+import { manageInventoryAction, fetchStockStatusAction, fetchLowStockItems } from "../redux/action/inventoryAction"; // Import fetchLowStockItems
 import { useNavigate, useParams } from "react-router-dom";
 import { selectInventoryLoading, selectInventoryError, selectInventoryMessage, selectGetAllInventorys, selectStockStatus } from "../redux/selector/selector";
 
@@ -82,12 +82,15 @@ const ManageInventory = () => {
         e.preventDefault();
         setValidationErrors({});
         if (!validateForm()) return;
+        
         const inventoryData = new FormData();
         inventoryData.append('sku', formData.sku);
         inventoryData.append('stock', formData.stock);
         inventoryData.append('reorder_level', formData.reorder_level);
         inventoryData.append('stock_type', formData.stock_type); 
-        dispatch(manageInventoryAction(inventoryData));
+        
+        await dispatch(manageInventoryAction(inventoryData));
+        dispatch(fetchLowStockItems());
     };
 
     const standardFields = [
@@ -104,7 +107,7 @@ const ManageInventory = () => {
         };
 
         return (
-            <div className="mb-6" key ={id}>
+            <div className="mb-6" key={id}>
                 <label htmlFor={id} className="block mb-2 text-gray-700 font-medium">{label}</label>
                 <input type={type} {...commonProps} />
                 {hasError && <p className="text-red-500 text-sm mt-2">{validationErrors[name]}</p>}

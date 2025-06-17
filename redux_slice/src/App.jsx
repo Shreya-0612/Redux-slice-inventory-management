@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import ProtectedRoute from './components/protectedRoute';
 import Login from './components/login';
 import HomePage from './components/home';
@@ -14,9 +15,16 @@ import UpdateProduct from './components/updateProduct';
 import ManageInventory from './components/manageInventory';
 import EditOptions from './components/editInventoryOptions';
 import ShowUsers from './components/showUsers';
-
+import UpdateUser  from './components/updateUser'; 
+import LowStockStatus from './components/lowStockStatus';
+import { initializeAuth } from './redux/action/loginAction'; 
 function App() {
-  
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(initializeAuth());
+  }, [dispatch]);
+
   return (
     <Router>
       <Routes>
@@ -30,13 +38,15 @@ function App() {
           <Route path="/dashboard/add-user" element={<AddUser  />} />
           <Route path="/dashboard/add-inventory" element={<AddInventory />} />
           <Route path="/dashboard/view-product" element={<ViewProduct />} />
-          <Route path="/dashboard/view-product/:category" element={<ViewProduct />} /> {/* New route for category */}
+          <Route path="/dashboard/view-product/:category" element={<ViewProduct />} /> 
           <Route path="/dashboard/show-users" element={<ShowUsers />} />
           <Route path="/dashboard/inventory-details/:sku" element={<InventoryDetails />} />
           <Route path="/dashboard/view-product/edit-options/delete-inventory/:sku" element={<DeleteInventory />} />
           <Route path="/dashboard/view-product/edit-options/update-product/:sku" element={<UpdateProduct />} />
           <Route path="/dashboard/view-product/edit-options/manage-inventory/:sku" element={<ManageInventory />} />
           <Route path="/dashboard/view-product/edit-options/:sku" element={<EditOptions />} />
+          <Route path="/dashboard/show-users/update-user/:user_name" element={<UpdateUser  />} />
+          <Route path="/dashboard/low-stock-status" element={<LowStockStatus />} />
         </Route>
       </Routes>
     </Router>

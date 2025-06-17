@@ -10,7 +10,8 @@ import {
   setInventories, 
   removeInventory, 
   updateInventory, 
-  setStockStatus 
+  setStockStatus,
+  setLowStockStatus
 } from '../reducer/inventoryReducer';
 
 export const addInventoryAction = (inventoryData) => async (dispatch) => {
@@ -211,5 +212,24 @@ export const manageInventoryAction = (inventoryData) => async (dispatch) => {
     dispatch(setError(error.response?.data?.message || "Error in updating inventory"));
   } finally {
     dispatch(setLoading(false));
+  }
+};
+
+export const fetchLowStockItems = () => async (dispatch) => {
+  dispatch(setLoading(true));
+  try {
+      const response = await API.get('/low-stocks');
+      if (response.data && Array.isArray(response.data)) {
+          const lowStockItems = response.data.filter(item => item.current_stock <= item.reorder_level);
+          dispatch(setLowStockStatus(lowStockItems));
+          dispatch(setMessage("Low stock items fetched successfully"));
+      } else {
+          throw new Error('Invalid data format');
+      }
+  } catch (error) {
+      console.error('Fetch Low Stock Items Error:', error);
+      dispatch(setError(error.response?.data?.message || 'Failed to fetch low stock items.'));
+  } finally {
+      dispatch(setLoading(false));
   }
 };
