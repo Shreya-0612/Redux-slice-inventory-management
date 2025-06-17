@@ -5,7 +5,7 @@ import Login from './components/login';
 import HomePage from './components/home';
 import './App.css';
 import Dashboard from './components/dashboard';
-import AddUser from './components/addUser';
+import AddUser  from './components/addUser';
 import AddInventory from './components/addInventory';
 import ViewProduct from './components/seeProducts';
 import InventoryDetails from './components/inventoryDetails';
@@ -27,9 +27,10 @@ function App() {
             <Dashboard />
           </ProtectedRoute>
         }>
-          <Route path="/dashboard/add-user" element={<AddUser />} />
+          <Route path="/dashboard/add-user" element={<AddUser  />} />
           <Route path="/dashboard/add-inventory" element={<AddInventory />} />
           <Route path="/dashboard/view-product" element={<ViewProduct />} />
+          <Route path="/dashboard/view-product/:category" element={<ViewProduct />} /> {/* New route for category */}
           <Route path="/dashboard/show-users" element={<ShowUsers />} />
           <Route path="/dashboard/inventory-details/:sku" element={<InventoryDetails />} />
           <Route path="/dashboard/view-product/edit-options/delete-inventory/:sku" element={<DeleteInventory />} />

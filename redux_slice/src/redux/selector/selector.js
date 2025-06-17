@@ -97,3 +97,4 @@ export const selectGetAllInventorys = createSelector(
   [selectInventoryState],
   (inventoryState) => inventoryState?.inventories || []
 );
+

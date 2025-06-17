@@ -42,7 +42,7 @@ const AddInventory = () => {
 
     useEffect(() => {
         if (message && message.includes("Inventory added successfully")) {
-            setTimeout(() => navigate('/dashboard'), 2000);
+            setTimeout(() => navigate('/dashboard/view-product'), 200);
         }
     }, [message, navigate]);
 

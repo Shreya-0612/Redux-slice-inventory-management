@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ListView = ({ inventories }) => {
+const ListView = ({ inventories, category }) => {
   const baseUrl = "http://172.17.0.109:8000"; 
   const navigate = useNavigate();
   
@@ -18,6 +18,10 @@ const ListView = ({ inventories }) => {
       return newSelected;
     });
   };
+
+  const filteredInventories = category 
+    ? inventories.filter(inventory => inventory.category === category) 
+    : inventories;
 
   return (
     <div className="overflow-x-auto text-[16px]">
@@ -36,7 +40,7 @@ const ListView = ({ inventories }) => {
           </tr>
         </thead>
         <tbody>
-          {inventories.map((inventory) => (
+          {filteredInventories.map((inventory) => (
             <tr key={inventory.product_id}>
               <td className="py-2 px-6 border-b-2">
                 <input 

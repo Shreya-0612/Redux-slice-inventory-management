@@ -9,7 +9,7 @@ const InventoryCard = ({ inventory }) => {
 
     
     const handleCardClick = () => {
-        navigate(`/dashboard/inventoy-details/${inventory.sku}`); 
+        navigate(`/dashboard/inventory-details/${inventory.sku}`); 
     };
 
     const baseUrl = "http://172.17.0.109:8000"; 
