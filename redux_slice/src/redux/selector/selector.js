@@ -93,6 +93,11 @@ export const selectCurrentInventory = createSelector(
   (inventoryState) => inventoryState?.currentInventory || null
 );
 
+export const selectTransactions = createSelector(
+  [selectInventoryState],
+  (inventoryState) => inventoryState?.transactions || []
+);
+
 export const selectGetAllInventorys = createSelector(
   [selectInventoryState],
   (inventoryState) => inventoryState?.inventories || []

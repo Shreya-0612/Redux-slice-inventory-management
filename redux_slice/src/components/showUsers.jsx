@@ -14,7 +14,9 @@ const ShowUsers = () => {
     useEffect(() => {
         dispatch(showUserAction());
     }, [dispatch]);
-    
+
+    const userRole = localStorage.getItem("user_role") || "default";
+
     return (
         <div className="max-w-5xl mx-auto m-10">
             <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
@@ -48,12 +50,24 @@ const ShowUsers = () => {
                                         <p className="text-white">{user.email}</p>
                                         <p className="text-white">{user.role}</p>
                                     </div>
-                                    <button 
-                                        className="bg-blue-500 text-white px-3 py-1 rounded-md"
-                                        onClick={() => navigate(`/dashboard/show-users/update-user/${user.user_name}`)} 
-                                    >
-                                        Update
-                                    </button>
+                                    <div className="ml-auto flex space-x-2">
+                                        {userRole === 'super_admin' && (
+                                            <>
+                                                <button 
+                                                    className="bg-blue-500 text-white px-3 py-1 rounded-md"
+                                                    onClick={() => navigate(`/dashboard/show-users/update-user/${user.user_name}`)} 
+                                                >
+                                                    Update
+                                                </button>
+                                                <button 
+                                                    className="bg-red-500 text-white px-3 py-1 rounded-md"
+                                                    onClick={() => navigate(`/dashboard/show-users/delete-user/${user.user_name}`)} 
+                                                >
+                                                    Delete
+                                                </button>
+                                            </>
+                                        )}
+                                    </div>
                                 </li>
                             ))}
                         </ul>

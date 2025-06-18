@@ -154,6 +154,24 @@ export const getUserByUserNameAction = (user_name) => async (dispatch) => {
   }
 };
 
+export const deleteUserAction = (user_name) => async (dispatch) =>{
+  dispatch(setLoading(true));
+  try {
+    const response = await API.delete(`/delete_user?delete_username=${user_name}`);
+    if (response.status === 200 || response.status === 201){
+      Swal.fire("User deleted successfully!!");
+      dispatch(setMessage(response.data.message || "User deleted successfully"));
+    }
+    else {
+      dispatch(setError(response.data.message || "Oops, Failed to delete user!!"));
+    }
+  }
+  catch (error){
+    console.log("Failed to delete user", error);
+    dispatch(setError(error.response?.data?.message || "Error in deleting user"));
+  }
+}
+
 export const logoutAction = () => async (dispatch) => {
   try {
     localStorage.removeItem("token");

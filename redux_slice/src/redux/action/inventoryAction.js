@@ -11,7 +11,8 @@ import {
   removeInventory, 
   updateInventory, 
   setStockStatus,
-  setLowStockStatus
+  setLowStockStatus,
+  setTransactions
 } from '../reducer/inventoryReducer';
 
 export const addInventoryAction = (inventoryData) => async (dispatch) => {
@@ -211,6 +212,24 @@ export const manageInventoryAction = (inventoryData) => async (dispatch) => {
     console.log("Error in updating inventory", error);
     dispatch(setError(error.response?.data?.message || "Error in updating inventory"));
   } finally {
+    dispatch(setLoading(false));
+  }
+};
+
+export const fetchTransactionDetails = (sku) => async (dispatch) => {
+  dispatch(setLoading(true));
+  try {
+    const response = await API.get(`/get-transaction?sku=${sku}`);
+    if (response.data && Array.isArray(response.data)) {
+      dispatch(setTransactions(response.data));
+      dispatch(setMessage("Transaction details fetched successfully"));
+      return response.data; 
+    } else {
+      throw new Error('Invalid data format');
+    }
+  }catch (error) {
+    console.error('Fetch transaction detail error:',error);
+  }finally{
     dispatch(setLoading(false));
   }
 };

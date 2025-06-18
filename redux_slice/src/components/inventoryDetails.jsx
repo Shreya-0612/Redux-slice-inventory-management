@@ -1,13 +1,14 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectGetAllInventorys } from '../redux/selector/selector'; 
 
 const InventoryDetails = () => {
     const { sku } = useParams();
+    const navigate = useNavigate(); // Initialize the navigate function
     const inventories = useSelector(selectGetAllInventorys);
     const inventory = inventories.find(item => item.sku === sku); 
-    console.log(sku, "fdskljakljsafkl");
+
     if (!inventory) {
         return <div className="text-center text-red-500 font-bold">Inventory not found.</div>;
     }
@@ -24,7 +25,7 @@ const InventoryDetails = () => {
                 <img
                     src={`http://172.17.0.109:8000${inventory.barcode_img}`}
                     alt={inventory.barcode_img}
-                  className="w-50 h-40 object-cover rounded-lg mb-4 shadow-md"
+                    className="w-50 h-40 object-cover rounded-lg mb-4 shadow-md"
                 />
             </div>
             <div className="flex flex-col space-y-2 mb-4">
@@ -37,6 +38,13 @@ const InventoryDetails = () => {
                 <p className="text-white text-lg"><strong>Stock:</strong> {inventory.stock}</p>
                 <p className="text-white text-lg"><strong>Reorder Level:</strong> {inventory.reorder_level}</p>
             </div>
+            
+                <button 
+                    className="bg-red-500 text-white px-3 py-1 rounded-md"
+                    onClick={() => navigate(`/dashboard/inventory-details/transaction/${inventory.sku}`)} 
+                >
+                    Transaction Details
+                </button>
         </div>
     );
 };

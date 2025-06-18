@@ -18,6 +18,10 @@ import ShowUsers from './components/showUsers';
 import UpdateUser  from './components/updateUser'; 
 import LowStockStatus from './components/lowStockStatus';
 import { initializeAuth } from './redux/action/loginAction'; 
+import DeleteUser from './components/deleteUser';
+import TransactionDetails from './components/transactionDetails';
+import TransactionAnalytics from './components/transactionGraph';
+
 function App() {
   const dispatch = useDispatch();
 
@@ -47,6 +51,9 @@ function App() {
           <Route path="/dashboard/view-product/edit-options/:sku" element={<EditOptions />} />
           <Route path="/dashboard/show-users/update-user/:user_name" element={<UpdateUser  />} />
           <Route path="/dashboard/low-stock-status" element={<LowStockStatus />} />
+          <Route path="/dashboard/show-users/delete-user/:user_name" element={<DeleteUser />} />
+          <Route path="/dashboard/inventory-details/transaction/:sku" element={<TransactionDetails />} />
+          <Route path="/dashboard/inventory-details/analytics/:sku" element={<TransactionAnalytics />} />
         </Route>
       </Routes>
     </Router>
