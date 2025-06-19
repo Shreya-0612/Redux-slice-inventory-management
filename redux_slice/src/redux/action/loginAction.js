@@ -62,6 +62,30 @@ export const initializeAuth = () => async (dispatch) => {
   }
 };
 
+export const refreshTokenAction = () => async (dispatch) => {
+  const token = localStorage.getItem("token");
+  if (token){
+    dispatch(setLoading(true));
+    try {
+      const response = await API.get('/getRefreshToken');
+      if (response.status === 200){
+        const newToken = response.data.access_token;
+        localStorage.setItem("token",newToken);
+        dispatch(setAuthentication(true));
+        dispatch(setUser (response.data.role));
+        dispatch(setMessage("Token refreshed successfully"));
+      }else {
+        dispatch(setError("Failed to refresh token"));
+      }
+    }catch (error){
+      console.error('Refresh Token Error:', error);
+      dispatch(setError(error.response?.data?.message || "Error while refreshing token"));
+    }finally{
+      dispatch(setLoading(false));
+    }
+  }
+}
+
 export const addUserAction = (userData) => async (dispatch) => {
   dispatch(setLoading(true));
   try {

@@ -81,19 +81,6 @@ const UpdateProduct = () => {
         if (!showNewSubcategory && !formData.sub_category_id && !showNewCategory) {
             errors.sub_category_id = "Product subcategory is required";
         }
-        if (!formData.name.trim()) {
-            errors.name = "Product name is required";
-        }
-        if (!formData.description.trim()) {
-            errors.description = "Product description is required";
-        }
-        if (formData.price === null || formData.price === '') {
-            errors.price = "Product price is required";
-        }
-        if (!formData.image) {
-            errors.image = "Product image is required";
-        }
-
         setValidationErrors(errors);
         return Object.keys(errors).length === 0;
     };
