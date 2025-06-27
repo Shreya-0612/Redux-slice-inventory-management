@@ -247,7 +247,7 @@ export const fetchLowStockItems = () => async (dispatch) => {
       }
   } catch (error) {
       console.error('Fetch Low Stock Items Error:', error);
-      dispatch(setError(error.response?.data?.message || 'Failed to fetch low stock items.'));
+      // dispatch(setError(error.response?.data?.message || 'Failed to fetch low stock items.'));
   } finally {
       dispatch(setLoading(false));
   }
